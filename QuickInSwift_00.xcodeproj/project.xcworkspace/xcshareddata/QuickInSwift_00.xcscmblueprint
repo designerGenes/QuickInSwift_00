@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "701C430D8A531501E02C8C9BB559EEF968B3ECF2",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "50F7D46ACA823BA34F3C7FB1FED5C5C731BA9D40" : 9223372036854775807,
+    "701C430D8A531501E02C8C9BB559EEF968B3ECF2" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "433F5C38-EBDF-4858-932D-231DE0D4514E",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "50F7D46ACA823BA34F3C7FB1FED5C5C731BA9D40" : "QuickInSwift\/QuickInSwift_00\/CustomActivityIndicator\/",
+    "701C430D8A531501E02C8C9BB559EEF968B3ECF2" : "QuickInSwift_00\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "QuickInSwift_00",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "QuickInSwift_00.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/designerGenes\/QuickInSwift_00.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "50F7D46ACA823BA34F3C7FB1FED5C5C731BA9D40"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/designerGenes\/QuickInSwift_00",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "701C430D8A531501E02C8C9BB559EEF968B3ECF2"
+    }
+  ]
+}
