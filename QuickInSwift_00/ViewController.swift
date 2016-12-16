@@ -9,10 +9,33 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+	// MARK: - outlets
+	@IBAction func toggleButton(_ sender: UIButton) {
+		if let customActivityIndicator = customActivityIndicator {
+			if customActivityIndicator.isAnimating {
+				customActivityIndicator.stopAnimating()
+				sender.setTitle("Start", for: .normal)
+			} else {
+				customActivityIndicator.startAnimating()
+				sender.setTitle("Stop", for: .normal)
+			}
+		}
+	}
+	
+	
+	// MARK: - properties
+	var customActivityIndicator: CustomActivityIndicator?
+	
+	// MARK: - methods
+	override func viewDidLayoutSubviews() {
+		customActivityIndicator?.center = view.center
+	}
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		// Do any additional setup after loading the view, typically from a nib.
+		customActivityIndicator = CustomActivityIndicator(size: CGSize(width: 50, height: 40), withBars: 3, withDuration: 0.35, withColor: .blue)
+		view.addSubview(customActivityIndicator!)
+		
 	}
 
 	override func didReceiveMemoryWarning() {
