@@ -1,11 +1,3 @@
-//
-//  CustomActivityIndicator.swift
-//  CustomActivityIndicator
-//
-//  Created by Jaden Nation on 12/13/16.
-//  Copyright © 2016 Jaden Nation. All rights reserved.
-//
-
 import UIKit
 
 protocol ActivityIndicatorType {
@@ -18,47 +10,63 @@ protocol ActivityIndicatorType {
 class CustomActivityIndicator: UIView, ActivityIndicatorType {
 	// MARK: - properties
 	private var numberOfBars: Int = 3
-	var color: UIColor = UIColor.green
+	private var frameView = UIView()
+	var color: UIColor = UIColor.white
 	var duration: Double = 0.35
 	var maskLayers = [CAShapeLayer]()
+	var dropLayers = [CAShapeLayer]()
 	var isAnimating: Bool = false
 	
 	// MARK: - methods
 	override func draw(_ rect: CGRect) {
-		UIGraphicsGetCurrentContext()?.clear(rect)
-		
+		UIGraphicsGetCurrentContext()?.clear(rect) // removes solid black rectangle in rect
 		layer.backgroundColor = UIColor.clear.cgColor
+		
+		addSubview(frameView)
+		frameView.frame = rect
+		frameView.layer.cornerRadius = 2
+		frameView.backgroundColor = UIColor.black.withAlphaComponent(0.8)
 		
 		let individualWidth = frame.width / CGFloat(numberOfBars)
 		for z in 0..<numberOfBars {
 			let newLayer = CAShapeLayer()
-			newLayer.anchorPoint = CGPoint(x: 0, y: 1)
-			
-				
+			newLayer.anchorPoint = CGPoint(x: 0.5, y: 1)
 			newLayer.path =	UIBezierPath(rect:
 				CGRect(
 					x: CGFloat(z) * individualWidth,
 					y: 0,
-					width: individualWidth - 0.5,
+					width: individualWidth,
 					height: frame.height)).cgPath
-
-			
 			newLayer.fillColor = color.cgColor
 			layer.addSublayer(newLayer)
 			
+			// animates bars going up and down
 			let maskLayer = CAShapeLayer()
 			maskLayer.path = UIBezierPath(roundedRect: CGRect(
 					x: CGFloat(z) * individualWidth,
 					y: 0,
-					width: individualWidth - 1,
+					width: individualWidth,
 					height: frame.height * 2),
 				  byRoundingCorners: [.topLeft, .topRight ],
 				  cornerRadii: CGSize(width: 1 , height: 2)).cgPath
-			
-			maskLayer.anchorPoint = CGPoint(x: 0, y: 0)
+			maskLayer.anchorPoint = CGPoint(x: 0.5, y: 0)
 			maskLayer.position = CGPoint(x: maskLayer.position.x, y: frame.height + 2)
 			newLayer.mask = maskLayer
 			maskLayers.append(maskLayer)
+			
+			// animates skinny bars which drop slowly after main bars snap upwards
+			let dropLayer = CAShapeLayer()
+			dropLayer.frame = CGRect(
+				x: CGFloat(z) * individualWidth,
+				y: frame.height + 2,
+				width: individualWidth,
+				height: 1)
+			dropLayer.fillColor = color.cgColor
+			dropLayer.backgroundColor = color.cgColor
+			dropLayers.append(dropLayer)
+			layer.addSublayer(dropLayer)
+			layer.masksToBounds = true
+		
 		}
 	}
 	
@@ -72,14 +80,13 @@ class CustomActivityIndicator: UIView, ActivityIndicatorType {
 			if maskLayers.count > 2 {
 				let middleIndex = Int(floor(Double(maskLayers.count) / 2))
 				let fixedDelta = middleIndex - abs(middleIndex - z)
-				differential += (frame.height * 0.15) * CGFloat(fixedDelta)
+				differential += (frame.height * 0.22) * CGFloat(fixedDelta)
 			}
 			
 			let motionAnimation = CABasicAnimation(keyPath: "position.y")
 			motionAnimation.byValue = max(-frame.height, (-(frame.height / 2) - differential))
 			
 			let colorAnimation = CABasicAnimation(keyPath: "fillColor")
-			
 			colorAnimation.fromValue = color.withAlphaComponent(0.65).cgColor
 			colorAnimation.toValue = color.cgColor
 			
@@ -92,9 +99,20 @@ class CustomActivityIndicator: UIView, ActivityIndicatorType {
 				animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseIn)
 			}
 			
+			
+			let dropAnimation = CABasicAnimation(keyPath: "position.y")
+			dropAnimation.fromValue = (frame.height / 2) - differential
+			dropAnimation.toValue = dropLayers[z].position.y
+			dropAnimation.duration = duration * 2
+			dropAnimation.beginTime = CACurrentMediaTime() + duration
+			dropAnimation.speed = (1 - (Float(z) * 0.1))
+			dropAnimation.repeatCount = .infinity
+			
+			
+			
+			dropLayers[z].add(dropAnimation, forKey: "position.y")
 			maskLayer.add(colorAnimation, forKey: "fillColor")
 			maskLayer.add(motionAnimation, forKey: "position.y")
-			
 		}
 	}
 	 

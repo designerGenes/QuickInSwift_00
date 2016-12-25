@@ -33,7 +33,7 @@ class ViewController: UIViewController {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		customActivityIndicator = CustomActivityIndicator(size: CGSize(width: 50, height: 40), withBars: 3, withDuration: 0.35, withColor: .blue)
+		customActivityIndicator = CustomActivityIndicator(size: CGSize(width: 50, height: 40), withBars: 3, withDuration: 0.35, withColor: .white)
 		view.addSubview(customActivityIndicator!)
 		
 	}
